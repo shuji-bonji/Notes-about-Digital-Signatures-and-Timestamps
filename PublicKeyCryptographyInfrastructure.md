@@ -56,6 +56,8 @@ sequenceDiagram
 
 ## 利用者
 
+TODO:
+
 ## 認証局（CA: Certification Authority)
 
 認証局とは、証明書の管理を行う機関のことです。  

@@ -6,8 +6,11 @@
 
 - [公開鍵暗号](PublicKeyCryptography.md)
 - [一方向性ハッシュ関数](OneWayHashFunction.md)
-- デジタル署名
+- [デジタル署名](DigitalSignature.md)
 - [公開鍵証明書](PublicKeyCertificate.md)
-- 公開鍵認証基盤
+- [公開鍵認証基盤](PublicKeyCryptographyInfrastructure.md)
+
+上記知識を持っていることを前提とするが、最小限のまとめとして以下を記します。
+
 - [暗号化とデジタル署名](EncryptionAndDigitalSignatures.md)
 - [タイムスタンプ](TimeStamps.md)
