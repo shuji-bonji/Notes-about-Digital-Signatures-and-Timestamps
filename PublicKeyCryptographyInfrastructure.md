@@ -13,13 +13,33 @@
 ### 構成図
 
 ```mermaid
-flowchart TB
-    bob[ボブ] -->|公開鍵登録| ca[認証局]
-    ca -->|証明書の発行| bob
-    ca -->|証明書の登録| repo[リポジトリ]
-    repo -->|証明書のダウンロード| alice[アリス]
+graph TD
+    subgraph Bob["ボブ"]
+      subgraph pairKey["ペア鍵"]
+        B_priKey["プライベート鍵"]
+        B_pubKey["公開鍵"]
+      end
+    end
 
-    class ca,bob,repo,alice default;
+    subgraph Auth["認証局"]
+      subgraph B_cert["証明書"]
+        B_pubKey_in_cert["ボブの公開鍵"]
+        Auth_sign["認証局のデジタル署名"]
+      end
+    end
+    subgraph Repository["リポジトリ"]
+      subgraph B_cert_in_rep["証明書"]
+        B_pubKey_in_rep["ボブの公開鍵"]
+        Auth_sign_in_rep["認証局のデジタル署名"]
+      end
+    end
+    subgraph Alice["アリス"]
+
+    end
+
+    B_pubKey --登録--> B_pubKey_in_cert
+    Auth --保存--> B_cert_in_rep
+    B_cert_in_rep --ダウンロード--> Alice
 ```
 
 この図は、以下の各要素間の基本的なインタラクションを示しています：
