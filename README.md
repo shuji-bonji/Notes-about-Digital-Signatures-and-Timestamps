@@ -6,7 +6,7 @@
 また、セキュリティについても言及していません。
 
 - [公開鍵暗号](PublicKeyCryptography.md)
-- 一方向性ハッシュ関数<!-- - [一方向性ハッシュ関数](OneWayHashFunction.md) -->
+- [一方向性ハッシュ関数](OneWayHashFunction.md)
 - [デジタル署名](DigitalSignature.md)
 - [公開鍵の証明書](PublicKeyCertificate.md)
 - [公開鍵認証基盤](PublicKeyCryptographyInfrastructure.md)
