@@ -9,6 +9,6 @@
 - [一方向性ハッシュ関数](OneWayHashFunction.md)
 - [デジタル署名](DigitalSignature.md)
 - [公開鍵の証明書](PublicKeyCertificate.md)
-- [公開鍵認証基盤](PublicKeyCryptographyInfrastructure.md)
+- [公開鍵認証基盤(PKI)](PublicKeyCryptographyInfrastructure.md)
 - [暗号化とデジタル署名の関係](RelationshipBetweenEncryptionAndDigitalSignatures.md)
 - [タイムスタンプ](TimeStamps.md)

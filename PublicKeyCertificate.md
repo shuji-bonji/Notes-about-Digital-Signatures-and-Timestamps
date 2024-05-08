@@ -237,3 +237,136 @@ X.509 証明書は、インターネットセキュリティで広く採用さ�
 X.509 証明書は、Web サーバーやメールサーバーなど、インターネット上のさまざまなサービスでクライアントとサーバー間の身元確認やデータの暗号化に使用されます。SSL/TLS プロトコルでの安全な通信を確立するために、クライアント（たとえば Web ブラウザ）はサーバーから証明書を受け取り、その証明書が信頼できる認証局によって発行されたものであるかを確認します。
 
 X.509 証明書は、その堅牢性と標準化されたフォーマットにより、デジタル認証の基盤として広く採用されています。この規格を通じて、ユーザーは暗号化された通信の信頼性とセキュリティを保証されます。
+
+### X.509 証明書の構造
+
+<table>
+  <tr>
+    <td rowspan="16">証明書</td>
+    <td rowspan="14">署名前証明書</td>
+    <td colspan="2">バージョン（Version）</td>
+  </tr>
+  <tr>
+    <td colspan="2">シリアル番号</td>    
+  </tr>
+  <tr>
+    <td colspan="2">アルゴリズム識別子</td>    
+  </tr>
+  <tr>
+    <td colspan="2">発行者</td>    
+  </tr>
+  <tr>
+    <td rowspan="2">有効期限</td>
+    <td>開始時刻</td>
+  </tr>
+  <tr>
+    <td>終了時刻</td>    
+  </tr>
+  <tr>
+    <td colspan="2">主体者</td>    
+  </tr>
+  <tr>
+    <td rowspan="2">主体者公開鍵情報</td>
+    <td>アルゴリズム</td>
+  </tr>
+  <tr>
+    <td>主体者公開鍵</td>    
+  </tr>
+  <tr>
+    <td colspan="2">発行者ユニーク識別番号</td>    
+  </tr>
+  <tr>
+    <td colspan="2">主体者ユニーク識別番号</td>    
+  </tr>
+  <tr>
+    <td rowspan="3">拡張領域</td>
+    <td>識別子</td>
+  </tr>
+  <tr>
+    <td>重要度</td>    
+  </tr>
+  <tr>
+    <td>拡張値</td>    
+  </tr>
+  <tr>
+    <td colspan="3">署名アルゴリズム</td>    
+  </tr>
+  <tr>
+    <td colspan="3">署名値</td>    
+  </tr>
+</table>
+
+#### 構造の説明
+
+<table>
+  <tr>
+    <th>証明書のセクション</th>
+    <th>サブセクション</th>
+    <th>詳細</th>
+  </tr>
+  <tr>
+    <td rowspan="3">署名前証明書</td>
+    <td>バージョン（Version）</td>
+    <td>証明書のバージョン番号（例：Version 3）</td>
+  </tr>
+  <tr>
+    <td>シリアル番号（Serial Number）</td>
+    <td>証明書の一意の識別子</td>
+  </tr>
+  <tr>
+    <td>アルゴリズム識別子（Signature Algorithm ID）</td>
+    <td>証明書の署名に使用されたアルゴリズム</td>
+  </tr>
+  <tr>
+    <td rowspan="2">発行者（Issuer）</td>
+    <td>名前</td>
+    <td>証明書を発行した認証局（CA）の名前</td>
+  </tr>
+  <tr>
+    <td>発行者ユニーク識別番号（Optional）</td>
+    <td>X.509バージョン2以降で使用可能な識別子</td>
+  </tr>
+  <tr>
+    <td rowspan="2">有効期限（Validity）</td>
+    <td>開始時刻（Not Before）</td>
+    <td>証明書の有効開始日時</td>
+  </tr>
+  <tr>
+    <td>終了時刻（Not After）</td>
+    <td>証明書の有効終了日時</td>
+  </tr>
+  <tr>
+    <td rowspan="3">主体者（Subject）</td>
+    <td>名前</td>
+    <td>証明書の所有者の識別情報</td>
+  </tr>
+  <tr>
+    <td>主体者公開鍵情報（Public Key Info）</td>
+    <td>公開鍵とそのアルゴリズム</td>
+  </tr>
+  <tr>
+    <td>主体者ユニーク識別番号（Optional）</td>
+    <td>X.509バージョン2以降で使用可能な識別子</td>
+  </tr>
+  <tr>
+    <td rowspan="3">拡張領域（Extensions）</td>
+    <td>識別子（Identifier）</td>
+    <td>拡張の一意の識別子</td>
+  </tr>
+  <tr>
+    <td>重要度（Critical）</td>
+    <td>この拡張がクリティカルであるかどうか</td>
+  </tr>
+  <tr>
+    <td>拡張値（Value）</td>
+    <td>拡張に含まれる具体的な情報または値</td>
+  </tr>
+  <tr>
+    <td>署名アルゴリズム（Signature Algorithm）</td>
+    <td colspan="2">証明書の署名に使用されたアルゴリズムの詳細</td>
+  </tr>
+  <tr>
+    <td>署名値（Signature）</td>
+    <td colspan="2">認証局（CA）によるデジタル署名</td>
+  </tr>
+</table>
