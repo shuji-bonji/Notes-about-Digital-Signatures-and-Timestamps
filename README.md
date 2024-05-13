@@ -12,3 +12,4 @@
 - [公開鍵認証基盤(PKI)](PublicKeyCryptographyInfrastructure.md)
 - [暗号化とデジタル署名の関係](RelationshipBetweenEncryptionAndDigitalSignatures.md)
 - [タイムスタンプ](TimeStamps.md)
+- [長期署名](LongTermSignature.md)
