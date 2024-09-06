@@ -1,14 +1,23 @@
-# デジタル署名とタイムスタンプについてのまとめ
+# 公開鍵を利用した暗号化、デジタル署名とタイムスタンプについてのまとめ
 
 業務にて電子署名及び電子契約サービスの開発者として、`業務知識として最低限必要な知識`を、それぞれのメモをここにまとめてみました。
 
-尚、あくまでドメイン知識としてのメモなので、セキュリティについては言及していません。
+前提知識としてデジタル署名の基板技術である、暗号と複合とは何か？など利用目的や利用方法について触れています。  
+今では一般的なものではありますあ、デジタル署名について初めて触れる方は、順に追って前提知識を確認することをお勧めします。
 
-- [公開鍵暗号](PublicKeyCryptography.md)
+尚、あくまでデジタル署名とタイムスタンプに関わるドメイン知識としてのメモなので、暗号アルゴリズムやセキュリティについては、ここでは言及していません。
+
+- [暗号と復号](EncryptionAndDecryption.md)
+- [公開鍵暗号](PublicKeyEncryption.md)
+- [公開鍵鍵交換](PublicKeyExchange.md)
+- [公開鍵暗号を利用したバックアップ](BackupUsingPublicKeyCryptography.md)
+- [デジタル署名(公開鍵署名)](DigitalSignature.md)
+- [公開鍵認証](PublicKeyAuthentication.md)
+- [公開鍵に基づくアクセス制御](PublicKeyBasedAccessControl.md)
 - [一方向性ハッシュ関数](OneWayHashFunction.md)
-- [デジタル署名](DigitalSignature.md)
-- [公開鍵の証明書](PublicKeyCertificate.md)
+- [公開鍵の証明書(PKC)](PublicKeyCertificate.md)
 - [公開鍵認証基盤(PKI)](PublicKeyCryptographyInfrastructure.md)
+- [認証局(CA)](CertificationAuthority.md)
 - [暗号化とデジタル署名の関係](RelationshipBetweenEncryptionAndDigitalSignatures.md)
 - [タイムスタンプ](TimeStamps.md)
 - [長期署名](LongTermSignature.md)
@@ -17,4 +26,4 @@
 ---
 
 - PDF にデジタル署名
-- PDF にタイムスタンプ
+- [PDF にタイムスタンプ](AddingTimestampToPDF.md)

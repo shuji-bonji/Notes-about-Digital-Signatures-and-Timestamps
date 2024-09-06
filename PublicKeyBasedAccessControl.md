@@ -1,0 +1,1 @@
+# 公開鍵に基づくアクセス制御(Public key-based access control)

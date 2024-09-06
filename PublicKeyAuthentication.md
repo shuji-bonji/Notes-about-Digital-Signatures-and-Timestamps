@@ -1,0 +1,1 @@
+# 公開鍵認証（Public key authentication）
