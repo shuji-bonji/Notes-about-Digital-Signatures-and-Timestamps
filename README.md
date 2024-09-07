@@ -15,7 +15,6 @@
 - [公開鍵の証明書(PKC)](PublicKeyCertificate.md)
 - [公開鍵認証基盤(PKI)](PublicKeyCryptographyInfrastructure.md)
 - [認証局(CA)](CertificationAuthority.md)
-- [暗号化とデジタル署名の関係](RelationshipBetweenEncryptionAndDigitalSignatures.md)
 - [タイムスタンプ](TimeStamps.md)
 - [長期署名](LongTermSignature.md)
 - [PKCS](PKCS.md)

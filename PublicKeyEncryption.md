@@ -58,12 +58,13 @@ flowchart LR
     Eve[イブ] -->|誤って自分の秘密鍵を使用し暗号化| WrongEncryptedMsgEve[誤った暗号化されたメッセージ]
     WrongEncryptedMsgEve -->|暗号化した文書を送信| Alice
 ```
+
 > [!NOTE] ここでのポイントは
 > - 公開鍵を持っているどの誰もがメッセージを暗号化して送ることができます。
 > - 暗号化されたメッセージを読むことができるのは私有鍵を持っている受信者のみです。
 
 
-## 　鍵配送問題とは
+## 鍵配送問題とは
 公開鍵暗号方式は鍵配送問題を解決するために考案されました。ではこの鍵配送問題とはなんでしょうか？
 
 （暗号化及び復号化を同じ鍵で行う）対称暗号によって暗号化すると以下の点において問題が生じます。
@@ -92,6 +93,9 @@ flowchart LR
 
 この例では、Alice が Bob にメッセージを暗号化して送信するプロセスを描いています。
 
+### フロー図
+アリスは公開鍵で暗号化し、ボブは私有鍵で復号します。
+
 ```mermaid
 graph LR
     subgraph アリス
@@ -105,37 +109,50 @@ graph LR
     B -->|メッセージを送信| C
 ```
 
-
 ### シーケンス図
 
 ```mermaid
-
 sequenceDiagram
     participant Alice
+    participant Encrypt as 暗号アルゴリズム
+    participant KeyGen as 鍵生成アルゴリズム
+    participant Decrypt as 復号アルゴリズム
     participant Bob
-    Bob->>+Bob: 生成公開鍵と私有鍵
-    Bob->>-Alice: 公開鍵を送信
-    Alice->>+Alice: メッセージを公開鍵で暗号化
-    Alice->>+Bob: 暗号化されたメッセージを送信
-    Bob->>-Bob: 私有鍵でメッセージを復号化
+
+    Bob->>+KeyGen: 公開鍵と私有鍵を生成
+    KeyGen->>-Bob: 公開鍵と私有鍵
+    Bob->>Alice: 公開鍵を送信
+    activate Bob
+
+    Alice->>+Encrypt: メッセージを公開鍵で暗号化
+    Encrypt->>-Alice: 暗号化されたメッセージ
+
+    Alice->>Bob: 暗号化されたメッセージを送信
+    Bob->>+Decrypt: 私有鍵でメッセージを復号化
+    Decrypt->>-Bob: 復号化されたメッセージ
+    deactivate Bob
+
     Note right of Bob: Bobはメッセージを読む
 ```
 
-この図は以下のステップを表しています：
+### プロセス全体の説明
 
-1. **公開鍵と私有鍵の生成**：Bob は公開鍵と私有鍵のペアを生成します。
-2. **公開鍵の送信**：Bob はその公開鍵を Alice に送信します。
-3. **メッセージの暗号化**：Alice は Bob から受け取った公開鍵を使ってメッセージを暗号化します。
-4. **暗号化されたメッセージの送信**：Alice はその暗号化されたメッセージを Bob に送信します。
-5. **メッセージの復号化**：Bob は自分の私有鍵を使って受け取ったメッセージを復号化します。
-6. **メッセージの読取り**：復号化後、Bob はメッセージを読むことができます。
+1. **鍵生成アルゴリズム（KeyGen）**:  
+ボブは鍵生成アルゴリズムを使用して公開鍵と私有鍵を生成します。このステップはセキュリティの基盤を形成し、通信のセキュリティを保証するために不可欠です。
+2. **公開鍵の送信**:  
+生成された公開鍵はアリスに送信されます。この公開鍵は、アリスがメッセージをボブへ安全に送信するために使用されます。
+3. **暗号アルゴリズム（Encrypt）**:  
+アリスはボブから受け取った公開鍵を使って、送信したいメッセージを暗号化します。暗号化プロセスはメッセージの内容を保護し、第三者による不正アクセスを防ぎます。
+4. **メッセージの送信**:  
+暗号化されたメッセージはボブに送信されます。ß
+5. **復号アルゴリズム（Decrypt）**:  
+ボブは自分の私有鍵を使用して、受信した暗号化されたメッセージを復号化します。このステップにより、ボブはメッセージの内容を安全に読むことができます。
 
 ## 暗号化の実践例
 
 OpenSSL を使用して公開鍵暗号方式でファイルやデータを暗号化・復号するプロセスは、公開鍵と私有鍵のペアを使います。ここでは具体的なコマンド例を通じて、ファイルの暗号化と復号の手順を説明します。
 
 ### 1. 鍵ペアの生成
-
 まず、RSA 鍵ペア（公開鍵と私有鍵）を生成します。以下のコマンドを使用して、2048 ビットの RSA 鍵を生成できます。
 
 ```sh
@@ -146,7 +163,6 @@ openssl rsa -pubout -in private_key.pem -out public_key.pem
 このコマンドは、私有鍵をprivate_key.pemに、対応する公開鍵をpublic_key.pemに保存します。
 
 ### 2. 公開鍵を使用した暗号化
-
 次に、公開鍵public_key.pemを使用してファイルを暗号化します。例えばexample.txtというファイルを暗号化するには、次のコマンドを使用します。
 
 ```sh
@@ -156,7 +172,6 @@ openssl rsautl -encrypt -inkey public_key.pem -pubin -in example.txt -out encryp
 このコマンドはexample.txtの内容を暗号化し、その結果をencrypted.datに保存します。
 
 ### 3. 私有鍵を使用した復号
-
 最後に、私有鍵private_key.pemを使用して暗号化されたファイルencrypted.datを復号します。
 
 ```sh
@@ -165,33 +180,51 @@ openssl rsautl -decrypt -inkey private_key.pem -in encrypted.dat -out decrypted.
 
 このコマンドはencrypted.datを復号し、元の内容をdecrypted.txtに保存します。
 
-### 注意点
 
-- openssl rsautlコマンドは比較的小さいデータサイズの暗号化に適しています。例えば、2048 ビット（256 バイト）の RSA 鍵を使用する場合、通常、最大で 245 バイト程度のデータしか暗号化できません。ファイルサイズが大きい場合は、データを分割するか、または AES などの対称鍵暗号方式でファイルを暗号化し、その鍵を公開鍵で暗号化するハイブリッド方式を検討してください。
-- この例ではシンプルな RSA 暗号を使用していますが、実際のセキュリティ要件に応じて適切な設定やオプションを選択することが重要です。
+> [!CAUTION] 注意点
+> - openssl rsautlコマンドは比較的小さいデータサイズの暗号化に適しています。例えば、2048 ビット（256 バイト）の RSA 鍵を使用する場合、通常、最大で 245 バイト程度のデータしか暗号化できません。ファイルサイズが大きい場合は、データを分割するか、または AES などの対称鍵暗号方式でファイルを暗号化し、その鍵を公開鍵で暗号化するハイブリッド方式を検討してください。
+> - この例ではシンプルな RSA 暗号を使用していますが、実際のセキュリティ要件に応じて適切な設定やオプションを選択することが重要です。
 
 これらのコマンドを利用することで、OpenSSL を使った基本的な公開鍵暗号化と復号のプロセスを実行できます。
 
-### 大きなファイルの暗号化
+## 大きなファイルを暗号化する実践例（ハイブリッド暗号化の使用）
 
 openssl rsautl は小さなデータの暗号化に適していますが、大きなファイルを暗号化する必要がある場合は、ハイブリッド暗号化アプローチが一般的です。この方法では、RSA を使用して対称鍵暗号化の鍵（例えば、AES 鍵）を暗号化し、その対称鍵でファイル全体を暗号化します。
 
-#### 例：ハイブリッド暗号化の使用
-
-1. **対称鍵の生成とファイル暗号化**:
-
+### 1. 対称鍵の生成とファイル暗号化
 
 ```sh
-   openssl rand -base64 32 > aes_key.bin
-   openssl enc -aes-256-cbc -in largefile.txt -out largefile.enc -pass file:aes_key.bin
+openssl rand -base64 32 > aes_key.bin
+openssl enc -aes-256-cbc -in largefile.txt -out largefile.enc -pass file:aes_key.bin
 ```
 
-2. **対称鍵の RSA 暗号化**:
+### 2. 対称鍵の RSA 暗号化
 
 ```sh
-   openssl rsautl -encrypt -inkey public_key.pem -pubin -in aes_key.bin -out encrypted_key.bin
+openssl rsautl -encrypt -inkey public_key.pem -pubin -in aes_key.bin -out encrypted_key.bin
 ```
 
-3. 送信されるのは largefile.enc と encrypted_key.bin の 2 つのファイルです。受信者は RSA で暗号化された鍵を復号してから、その鍵を使用してファイルを復号します。
+### 3. 暗号化された鍵を復号
+
+```sh
+openssl rsautl -decrypt -inkey private_key.pem -in encrypted_key.bin -out decrypted_aes_key.bin
+```
+### 4. ファイルの復号
+
+```sh
+openssl enc -aes-256-cbc -d -in largefile.enc -out largefile_decrypted.txt -pass file:decrypted_aes_key.bin
+```
 
 以上の方法で、openssl rsautl の容量制限を回避しつつ、大きなファイルも安全に暗号化・転送することが可能です。
+
+
+## 公開鍵暗号の用途
+
+公開鍵暗号方式（非対称鍵暗号方式）は、次のような用途に広く利用されます：
+
+1. **データの暗号化と復号**:  
+公開鍵を使用してデータを暗号化し、対応する秘密鍵でそのデータを復号します。これにより、第三者がデータを読むことを防ぎます。
+2. **セキュアな鍵配布**:  
+データを暗号化するための共通鍵（対称鍵）を交換する際に公開鍵暗号方式を利用します。これにより、安全な通信チャンネルを確立できます。
+3. **認証プロトコル**:  
+ユーザーまたはデバイスの身元を確認するために使用されます。例えば、SSL/TLSなどのセキュアな通信プロトコルで広く使われています。
