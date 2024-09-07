@@ -1,0 +1,1 @@
+# 証明書失効リスト（Certificate Revocation List:CRL）
