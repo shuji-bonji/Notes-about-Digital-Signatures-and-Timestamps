@@ -1,4 +1,4 @@
-# 認証局(Certificate Authority, CA)
+# 認証局(Certificate Authority:CA)
 認証局（Certificate Authority, CA）はデジタル証明書を発行し、それを使用してSSL/TLS通信、デジタル署名、タイムスタンプ認証（TSA）などを利用する際に必要な公開鍵保証する証明書を発行・提供する機関です。
 
 認証局は、デジタル証明書を発行する機関であり、それを使用してSSL/TLS通信、デジタル署名、タイムスタンプ認証（TSA）などで利用される公開鍵の真正性を保証します。

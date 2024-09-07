@@ -1,4 +1,4 @@
-# 公開鍵暗号（Public Key Encryption: PKE）
+# 公開鍵暗号（Public Key Encryption:PKE）
 
 公開鍵暗号とは[公開鍵暗号方式](VariousCryptographyMethods.md#公開鍵暗号方式public-key-cryptography-pkc)にて、データの暗号化やデジタル署名の生成と検証、認証など、多岐にわたる用途で利用されます。
 ここでは公開鍵暗号方式にて、暗号化を行うことについて詳しく説明します。

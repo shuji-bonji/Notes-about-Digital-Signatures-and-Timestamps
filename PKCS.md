@@ -1,4 +1,4 @@
-# PKCS
+# PKCS(Public-Key Cryptography Standards)
 
 PKCS (Public-Key Cryptography Standards) は、RSA セキュリティにより考案され公開された公開鍵暗号標準のグループを示します。
 
