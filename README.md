@@ -20,6 +20,7 @@
 - [長期署名](LongTermSignature.md)
 - [PKCS](PKCS.md)
 - [認証と認可](AuthenticationAndAuthorization.md)
+- [JWTとJWS](JWTAndJWS.md)
 
 ---
 
