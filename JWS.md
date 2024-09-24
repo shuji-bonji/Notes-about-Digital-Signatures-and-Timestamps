@@ -1,9 +1,4 @@
-# JWTとJWS
 
-
-## JWTとは
-
-- https://datatracker.ietf.org/doc/html/rfc7519
 
 ## JWSとは
 - https://datatracker.ietf.org/doc/html/rfc7515

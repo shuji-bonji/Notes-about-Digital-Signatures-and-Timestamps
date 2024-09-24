@@ -70,3 +70,94 @@ PKIの仕組みでは、信頼できる第三者機関(Trusted Third Party:TTP)�
 ## リポジトリ(Repository)
 
 リポジトリは、証明証と CRL を保村しておき、PKI の利用者が証明書を入手できるようにしたデーターベースのことです。証明書ディレクトリと呼ばれることもあります。
+
+
+## 構成
+
+公開鍵認証基盤（PKI）での認証局（CA）利用にはのさまざまな要素とその関連プロセスがあります。
+
+```mermaid
+graph TB
+    Applicant[利用者（申込、本人確認情報の提出）]
+    User[証明書使用者]
+    subgraph CA["認証局 (CA)"]
+        RA[登録局（RA）]
+        IA[発行局（IA）]
+        Repository[リポジトリ]
+    end
+    LRA[支援登録局（LRA）]
+    PA[ポリシー局（PA）]
+    OA[運用局（OA）]
+
+    PA -->|認証業務の管理監督| CA
+    OA -->|認証業務の運用| CA
+    Applicant -->|申込| RA
+    Applicant -->|本人確認情報の提出| RA
+    Applicant --->|電子署名・証明書の送付| User
+    IA -->|証明書発行| RA
+    IA -->|公開情報格納・失効| Repository
+    RA -->|発行・失効指示| IA
+    RA -->|登録業務委託| LRA
+    LRA -->|証明書申請の処理| IA
+    User -->|証明書有効性確認| Repository
+    Repository --> User
+
+    classDef default fill:#333,stroke:#fff,stroke-width:2px,color:#fff;
+    classDef operations fill:#555,stroke:#fff,stroke-width:2px,color:#fff;
+    class Applicant,User operations
+```
+
+### 図の説明
+
+- **利用者（Applicant）**:
+  - 申込みと本人確認情報の提出を行います。
+  - 電子署名や証明書の送付も行うことを示しています。
+
+- **証明書使用者（User）**:
+  - 証明書の有効性を確認し、公開情報をリポジトリから受け取ります。
+
+- **認証局（CA）内のエンティティ**:
+  - **登録局（RA）**:
+    - 利用者からの申込みと本人確認情報を受け取り、証明書の発行や失効の指示を発行局（IA）に送ります。
+    - 支援登録局（LRA）に登録業務を委託します。
+  - **発行局（IA）**:
+    - 証明書の発行を担当し、公開情報の格納と失効をリポジトリで管理します。
+  - **リポジトリ**:
+    - 公開情報と失効情報を管理し、証明書使用者に提供します。
+
+- **支援登録局（LRA）**:
+  - 地域や組織固有の登録業務を担当し、証明書申請の処理を発行局（IA）に提供します。
+
+- **ポリシー局（PA）** と **運用局（OA）**:
+  - PAは認証業務の管理監督を行い、OAは認証業務の日常運用を担当します。両者は認証局（CA）に対してそれぞれの業務を行います。
+
+##
+
+```mermaid
+sequenceDiagram
+    participant Applicant as 利用者
+    participant RA as 登録局 (RA)
+    participant LRA as 支援登録局 (LRA)
+    participant IA as 発行局 (IA)
+    participant Repository as リポジトリ
+    participant User as 証明書使用者
+    participant CA as 認証局 (CA)
+    participant PA as ポリシー局 (PA)
+    participant OA as 運用局 (OA)
+
+    Applicant->>+RA: 申込みと本人確認情報の提出
+    RA->>+LRA: 登録業務委託
+    LRA->>+IA: 証明書申請の処理
+    IA->>+Repository: 証明書発行
+    IA->>RA: 発行指示
+    RA->>IA: 失効指示
+    Repository->>+User: 公開情報格納・失効
+    User->>User: 証明書有効性確認
+    User->>Applicant: 電子署名・証明書の確認
+    PA->>CA: 認証業務の管理監督
+    OA->>CA: 認証業務の運用
+    loop 毎回の利用
+        User->>Repository: 証明書の検証
+    end
+```
+
