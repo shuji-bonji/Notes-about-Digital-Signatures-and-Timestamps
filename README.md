@@ -26,7 +26,7 @@
 ---
 
 - PDF にデジタル署名
-- [PDF にタイムスタンプ](AddingTimestampToPDF.md)
+<!-- - [PDF にタイムスタンプ](AddingTimestampToPDF.md) -->
 <!-- - [公開鍵鍵交換](PublicKeyExchange.md) -->
 <!-- - [公開鍵暗号を利用したバックアップ](BackupUsingPublicKeyCryptography.md) -->
 <!-- - [公開鍵認証](PublicKeyAuthentication.md) -->
