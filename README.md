@@ -8,7 +8,7 @@
 尚、あくまでデジタル署名とタイムスタンプに関わるドメイン知識としてのメモなので、暗号アルゴリズムやセキュリティについては、ここでは言及していません。
 
 - [暗号と復号](EncryptionAndDecryption.md)
-- [さまざまな暗号方式](VariousCryptographyMethods.md)
+- [代表的な暗号化方式](RepresentativeEncryptionMethods.md)
 - [公開鍵暗号(PKE)](PublicKeyEncryption.md)
 - [デジタル署名(公開鍵署名)](DigitalSignature.md)
 - [一方向性ハッシュ関数](OneWayHashFunction.md)
