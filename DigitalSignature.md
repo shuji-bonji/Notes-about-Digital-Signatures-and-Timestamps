@@ -90,6 +90,55 @@ graph LR
     A -->|メッセージを送信| G
 
 ```
+```mermaid
+graph LR
+    PKey([公開鍵🔑<br>（検証鍵）])
+    PKey_([公開鍵🔑<br>（検証鍵）])
+    SKey([秘密鍵🔑<br>（署名鍵）])
+    MS@{ shape: doc, label: "文書"}
+    MS_@{ shape: doc, label: "文書"}
+    SD[署名データ]
+    SD_[署名データ]
+    HA1[ハッシュ値]
+    HA2[ハッシュ値]
+    Kpc(鍵ペア作成)
+    HaF1(ハッシュ関数)
+    HaF2(ハッシュ関数)
+    En(暗号化)
+    De(復号)
+    Si(署名)
+    Ve(検証)
+    
+    subgraph 送信者
+      Kpc --> SKey
+      Kpc --> PKey
+      MS --> HaF1
+      HaF1 --> HA1
+      SKey --> Si
+      HA1 --> Si
+      Si --> SD
+      
+    end
+      PKey --> PKey_
+      SD --> SD_
+      MS --> MS_
+    subgraph 受信者
+      MS_ --> HaF2
+      HaF2 --> HA2
+      PKey_ --> Ve
+      SD_ --> Ve
+      Ve --> HA2
+    end
+
+    %% クラス定義（背景色変更）
+    classDef highlight fill:#888888,stroke:#333,stroke-width:2px;
+
+    %% クラスをノードに割り当て
+    class KPC,En,De highlight;
+```
+秘密鍵で暗号化しているのはRSAを使った署名アルゴリズムだけで説明できる仕組みで、世の中にはRSA以外の仕組みを使った署名
+アルゴリズムもたくさんあり、そこでは署名に暗号化や符号するアルゴリズムは存在しません。
+そのため、署名では秘密鍵で暗号化するとか、公開鍵で復号するといったことは誤りとなります
 
 ### シーケンス図
 

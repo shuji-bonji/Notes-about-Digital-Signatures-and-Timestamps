@@ -26,6 +26,7 @@ sequenceDiagram
 この変換には、一定の規則（アルゴリズム）と鍵（Key）が使用されます。  
 鍵はこの変換プロセスにおいて非常に重要な役割を果たし、鍵がなければデータは安全に暗号化されません。  
 
+### シーケンス図
 ```mermaid
 sequenceDiagram
     participant U as ユーザー
@@ -36,6 +37,18 @@ sequenceDiagram
     E->>U: 暗号文
 ```
 
+### フロー図
+```mermaid
+graph LR
+    PT[平文]
+    Key([鍵])
+    CT[暗号文]
+    CA(暗号アルゴリズム)
+
+    PT --> CA -->|暗号化| CT
+    Key --> CA   
+```
+
 ### 暗号化の目的
 **不正な第三者がデータを盗聴したとしても、内容を理解できないようにすること**を目的としています。
 
@@ -44,6 +57,7 @@ sequenceDiagram
 これも同様に特定のアルゴリズムと鍵を使用します。  
 正しい鍵とアルゴリズムを使用した場合にのみ、元の平文を正確に復元することができます。  
 
+### シーケンス図
 ```mermaid
 sequenceDiagram
     participant R as 受信者
@@ -52,6 +66,17 @@ sequenceDiagram
     R->>D: 暗号文
     Note right of D: 鍵を使ってデータを復号
     D->>R: 復元された平文
+```
+### フロー図
+```mermaid
+graph LR
+    PT[平文]
+    Key@{ shape: circle, label: "鍵" }
+    CT[暗号文]
+    CA(暗号アルゴリズム)
+
+    CT --> CA -->|復号| PT
+    Key --> CA   
 ```
 
 ### 復号化の目的
