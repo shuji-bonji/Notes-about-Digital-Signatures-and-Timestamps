@@ -1,4 +1,5 @@
 # デジタル署名とタイムスタンプについてのまとめ
+
 電子署名及び電子契約サービスの開発者として、`業務知識として最低限必要な知識`を、それぞれのメモをここにまとめてみました。
 
 前提知識としてデジタル署名の基板技術である、暗号と複合とは何か？など利用目的や利用方法について触れています。  
@@ -23,11 +24,12 @@
 - [JWS](JWS.md)
 - [SSLKEYLOGFILE を用いた TLS 通信の復号と Wireshark の活用法](./sslkeylogfile.md)
 
----
+### PDF 関連
 
-- PDF にデジタル署名
-<!-- - [PDF にタイムスタンプ](AddingTimestampToPDF.md) -->
-<!-- - [公開鍵鍵交換](PublicKeyExchange.md) -->
-<!-- - [公開鍵暗号を利用したバックアップ](BackupUsingPublicKeyCryptography.md) -->
-<!-- - [公開鍵認証](PublicKeyAuthentication.md) -->
-<!-- - [公開鍵に基づくアクセス制御](PublicKeyBasedAccessControl.md) -->
+- [PAdES](PAdES.md)
+- [PDF にタイムスタンプ](AddingTimestampToPDF.md)
+
+### 公開鍵暗号の応用
+
+- [公開鍵認証](PublicKeyAuthentication.md)
+- [公開鍵鍵交換](PublicKeyExchange.md)

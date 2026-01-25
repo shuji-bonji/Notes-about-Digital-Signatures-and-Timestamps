@@ -1,7 +1,11 @@
 # 認証局(Certificate Authority:CA)
-PKIの仕組みでは、信頼できる第三者機関(Trusted Third Party:TTP)が、公開鍵の正当性を保証します。この第三者機関を 認証局（Certificate Authority, CA）と呼びます。
+
+PKI の仕組みでは、信頼できる第三者機関（Trusted Third Party: TTP）が、公開鍵の正当性を保証する。この第三者機関を認証局（Certificate Authority, CA）と呼ぶ。
+
+> 参照: [RFC 5280](https://datatracker.ietf.org/doc/html/rfc5280) - Internet X.509 Public Key Infrastructure Certificate and Certificate Revocation List (CRL) Profile
 
 ## 認証局の役割
+
 認証局は、電子証明書を発行しその電子証明書によって公開鍵の真正性を保証します。
 
 [電子証明書](PublicKeyCertificate.md)には、公開鍵の他に証明書の発行者（CA自体）、有効期限、証明書の所有者の情報などが含まれており、これらの情報を基にデジタルデータの安全な交換が可能になります。
@@ -27,7 +31,6 @@ PKIの仕組みでは、信頼できる第三者機関(Trusted Third Party:TTP)�
 
 認証局が行う場合は、鍵ペアを作成したのち、その私有鍵を利用者に送ります。  
 これには [RFC7292](https://datatracker.ietf.org/doc/html/rfc7292)という規格で行い[PKCS#12](./PKCS.md#pkcs12)というファイルフォーマットを利用します。
-
 
 ### 証明書の登録
 
@@ -70,7 +73,6 @@ PKIの仕組みでは、信頼できる第三者機関(Trusted Third Party:TTP)�
 ## リポジトリ(Repository)
 
 リポジトリは、証明証と CRL を保村しておき、PKI の利用者が証明書を入手できるようにしたデーターベースのことです。証明書ディレクトリと呼ばれることもあります。
-
 
 ## 構成
 
@@ -161,3 +163,89 @@ sequenceDiagram
     end
 ```
 
+## 認証局の要件（RFC 5280）
+
+RFC 5280 では、認証局が証明書を発行する際に遵守すべき要件を定義している。以下に主要な要件を示す。
+
+### 証明書発行に関する要件
+
+認証局は、証明書の発行において以下の要件を満たす必要がある。
+
+| 要件レベル | 項目               | 説明                                                                |
+| ---------- | ------------------ | ------------------------------------------------------------------- |
+| MUST       | 一意なシリアル番号 | 発行する各証明書に一意なシリアル番号を割り当てなければならない      |
+| MUST       | 有効期間の設定     | notBefore と notAfter を正しく設定しなければならない                |
+| MUST       | 署名アルゴリズム   | サポートされるアルゴリズムで署名しなければならない                  |
+| SHOULD     | 拡張フィールド     | 推奨される拡張（Basic Constraints、Key Usage 等）を含めるべきである |
+| MUST NOT   | 重複シリアル番号   | 同一の発行者から同じシリアル番号の証明書を発行してはならない        |
+
+### CRL 発行に関する要件
+
+証明書失効リスト（CRL）の発行においても、以下の要件が定められている。
+
+| 要件レベル | 項目         | 説明                                                       |
+| ---------- | ------------ | ---------------------------------------------------------- |
+| MUST       | 定期的な発行 | CRL は定期的に発行しなければならない                       |
+| MUST       | 署名         | CRL は CA の私有鍵で署名しなければならない                 |
+| SHOULD     | 次回更新時刻 | nextUpdate フィールドを含めるべきである                    |
+| MUST       | 失効理由     | 失効した証明書のシリアル番号と失効日を含めなければならない |
+
+## 認証局の階層構造
+
+認証局は階層構造を持ち、信頼の連鎖（Chain of Trust）を形成する。
+
+```mermaid
+flowchart TB
+    Root[ルート CA] --> |署名| IntermediateA[中間 CA A]
+    Root --> |署名| IntermediateB[中間 CA B]
+    IntermediateA --> |署名| EndEntityA1[エンドエンティティ証明書]
+    IntermediateA --> |署名| EndEntityA2[エンドエンティティ証明書]
+    IntermediateB --> |署名| EndEntityB1[エンドエンティティ証明書]
+```
+
+### 各レベルの役割
+
+階層構造における各認証局の役割を以下に示す。
+
+| レベル             | 説明                              | セキュリティ要件               |
+| ------------------ | --------------------------------- | ------------------------------ |
+| ルート CA          | 信頼の起点となる最上位 CA         | オフライン保管、HSM 使用が必須 |
+| 中間 CA            | ルート CA から権限を委譲された CA | ルート CA より緩やかな要件     |
+| エンドエンティティ | 実際のユーザーやサーバーの証明書  | 各用途に応じた要件             |
+
+## 証明書ポリシーと認証実施規程
+
+認証局の運用は、証明書ポリシー（CP）と認証実施規程（CPS）によって規定される。
+
+| 文書                 | 説明                                 |
+| -------------------- | ------------------------------------ |
+| 証明書ポリシー（CP） | 証明書の利用目的や適用範囲を定義する |
+| 認証実施規程（CPS）  | CA の運用手順や技術要件を定義する    |
+
+RFC 3647 で CP/CPS のフレームワークが定義されている。
+
+## 関連 RFC・規格
+
+認証局に関連する主要な RFC と規格を以下に示す。
+
+| 規格                                                      | タイトル                               | 説明                           |
+| --------------------------------------------------------- | -------------------------------------- | ------------------------------ |
+| [RFC 5280](https://datatracker.ietf.org/doc/html/rfc5280) | X.509 PKI Certificate and CRL Profile  | 証明書と CRL のプロファイル    |
+| [RFC 2986](https://datatracker.ietf.org/doc/html/rfc2986) | PKCS #10: Certification Request Syntax | 証明書署名要求の構文           |
+| [RFC 7292](https://datatracker.ietf.org/doc/html/rfc7292) | PKCS #12                               | 私有鍵と証明書の交換形式       |
+| [RFC 6960](https://datatracker.ietf.org/doc/html/rfc6960) | OCSP                                   | オンライン証明書状態プロトコル |
+| [RFC 3647](https://datatracker.ietf.org/doc/html/rfc3647) | Certificate Policy and CPS Framework   | CP/CPS のフレームワーク        |
+| [RFC 4158](https://datatracker.ietf.org/doc/html/rfc4158) | Certification Path Building            | 証明書パス構築のガイダンス     |
+
+## 日本における法令との関係
+
+日本において、認証局は電子署名法に基づく認定を受けることができる。
+
+| 法令・制度                                                             | 説明                                       |
+| ---------------------------------------------------------------------- | ------------------------------------------ |
+| [電子署名法](https://elaws.e-gov.go.jp/document?lawid=412AC0000000102) | 電子署名の法的効力を定める                 |
+| [認定認証業務](https://www.digital.go.jp/policies/posts/signature)     | 法務大臣による認証業務の認定制度           |
+| [GPKI](https://www.gpki.go.jp/)                                        | 政府認証基盤                               |
+| [JPKI](https://www.jpki.go.jp/)                                        | 公的個人認証サービス（マイナンバーカード） |
+
+認定認証業務を行う認証局は、技術要件と運用要件を満たす必要があり、定期的な監査を受ける
