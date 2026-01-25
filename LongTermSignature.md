@@ -264,21 +264,21 @@ CAdES-A は長期アーカイブを目的とした形式であり、以下の特
 ```mermaid
 gantt
     title 長期署名における猶予期間 (Grace Period)
-    dateFormat X
-    axisFormat %s
+    dateFormat YYYY-MM-DD
+    axisFormat %m/%d
 
     section 署名プロセス
-    署名生成           :milestone, m1, 0, 0
-    タイムスタンプ付与  :milestone, m2, 1, 0
-
-    section 検証プロセス
-    最初の失効確認      :milestone, m3, 2, 0
-    証明書パス検証      :milestone, m4, 3, 0
-    2回目の失効確認     :milestone, m5, 7, 0
-    CAdES-C 構築       :milestone, m6, 8, 0
+    署名生成           :milestone, m1, 2024-01-01, 0d
+    タイムスタンプ付与  :milestone, m2, 2024-01-02, 0d
 
     section 猶予期間
-    Grace Period       :active, gp, 1, 8
+    Grace Period       :active, gp, 2024-01-02, 7d
+
+    section 検証プロセス
+    最初の失効確認      :milestone, m3, 2024-01-03, 0d
+    証明書パス検証      :milestone, m4, 2024-01-05, 0d
+    2回目の失効確認     :milestone, m5, 2024-01-08, 0d
+    CAdES-C 構築       :milestone, m6, 2024-01-09, 0d
 ```
 
 ### 猶予期間の目的
